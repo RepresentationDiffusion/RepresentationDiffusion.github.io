@@ -481,7 +481,7 @@ To address this, we apply Principal Component Analysis (PCA) to reduce the dimen
                 \big).
         \end{align}
         
-        By recalling the equivalence of denoisers and scores \citep{vincent2011}, we implement this representation-guided prediction $\boldsymbol{\hat{e}_\theta}(\mathbf{x}_t, \mathbf{z}_t, t)$ at each denoising step as follows:
+        We implement this representation-guided prediction $\boldsymbol{\hat{e}_\theta}(\mathbf{x}_t, \mathbf{z}_t, t)$ at each denoising step as follows:
         \begin{equation}
         \boldsymbol{\hat{\epsilon}}_\theta(\mathbf{x}_t, \mathbf{z}_t, t) = \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t) + w_r\left(\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, \mathbf{z}_t, t) - \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)\right).
         \end{equation}
