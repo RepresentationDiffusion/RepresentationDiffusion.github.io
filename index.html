@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html>
+
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 10px; /* Adjust this value to make text larger or smaller */
+  }
+</style>
+
+<style>
+  .teal {
+    color: teal; /* Add this line to set text color to blue */
+  }
+</style>
+
+<style>
+  .purple {
+    color: purple; /* Add this line to set text color to blue */
+  }
+</style>
+
+
+
+
+<style>
+  /* Style for floating image */
+  .right-float {
+    float: right;       /* Floats the image to the right */
+    width: 470px;       /* Set the width to make it smaller */
+    height: auto;       /* Maintain aspect ratio */
+    margin: 0 0 10px 10px; /* Add spacing */
+  }
+</style>
+
+
+<style>
+  /* Style for floating image */
+  .left-float {
+    float: left;       /* Floats the image to the right */
+    width: 500px;       /* Set the width to make it smaller */
+    height: auto;       /* Maintain aspect ratio */
+    margin: 0 0 10px 10px; /* Add spacing */
+  }
+</style>
+
+
+<script type="text/javascript">
+  MathJax = {
+    tex: {
+      inlineMath: [['\\(','\\)'], ['$', '$']],
+      displayMath: [['\\[','\\]'], ['$$','$$']],
+      packages: { '[+]': ['colorv2'] }
+
+    }
+  };
+</script>
+
+
+<script type="text/javascript" async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="ReDi"/>
+  <meta property="og:description" content="Boosting Generative Image Modeling via
+  Joint Image-Feature Synthesis"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X610-->
+  <meta property="og:image" content="static/images_new/favicon.ico" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="610"/>
+
+
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images_new/favicon.ico">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="icon" type="image/x-icon" href="static/images_new/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h2 class="title is-1 publication-title">
+               <span class="texttt">ReDi</span>: Boosting Generative Image Modeling via Joint Image-Feature Synthesis
+
+              <!-- <span class="texttt">EQ-VAE</span>: Equivariance Regularized Latent Space for Improved Generative Image Modeling -->
+            </h2>
+            
+            <style>
+              .texttt {
+                font-family: Consolas; /* Monospace font */
+                font-size: 1em; /* Match surrounding text size */
+                color: rgb(173, 14, 62); /* Add this line to set text color to blue */
+                letter-spacing: 0; /* Adjust if needed */
+              }
+            </style>
+
+            <div class="is-size-4 publication-authors" style="font-size: 2rem; font-weight: bold;">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=a5vkWc8AAAAJ&hl=en" target="_blank">Theodoros Kouzelis</a><sup>1,3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=a5vkWc8AAAAJ&hl=en" target="_blank">Efstathios Karypidis</a><sup>1,3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=B_dKcz4AAAAJ&hl=en" target="_blank">Ioannis Kakogeorgiou</a><sup>1,6</sup>,
+              </span>
+              <br>
+              <span class="author-block">
+                <a href="https://scholar.google.fr/citations?user=7atfg7EAAAAJ&hl=en" target="_blank">Spyros Gidaris</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=xCPoT4EAAAAJ&hl=en" target="_blank">Nikos Komodakis</a><sup>1,4,5</sup>
+              </span>
+            </div>
+
+
+                <br>
+
+                <div class="is-size-6 publication-authors">
+                  <span>1. Archimedes/Athena RC</span> | 
+                  <span>2. valeo.ai</span> | 
+                  <span>3. National Technical University of Athens</span> | 
+                  <span>4. University of Crete</span>  
+                  <br>
+                  <span>5. IACM-Forth</span> |
+                  <span>6. IIT, NCSR "Demokritos"</span>
+              </div>
+              
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <!-- <span class="link-block">
+                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span> -->
+
+                    <!-- Supplementary PDF link -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a> -->
+                  </span>
+
+              <!-- Github link -->
+              <span class="link-block">
+                <a href="https://github.com/zelaki/ReDi" target="_blank"
+                  class="external-link button is-large is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+              <!-- ArXiv abstract Link -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2504.16064" target="_blank"
+                  class="external-link button is-large is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+</span>                                                                                                                                                                             
+                  <span>arXiv</span>
+                </a>
+              </span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  code {
+    color: black !important;  /* Forces text color to black */
+    font-weight: normal;       /* Optional: makes it blend better */
+  }
+</style>
+<!-- Teaser video-->
+<section class="hero teaser">
+  <div class="container is-fullhd" style="max-width: 80%; padding: 0 5%;">
+    <div class="hero-body" style="width: 100%;">
+      <img src="static/images_new/teaser.png" alt="Intro Image" id="tree" style="height: 100%; width: 100%; object-fit: cover;">
+      <h2 class="subtitle has-text-left" style="font-size: 1rem; max-width: 100%; margin: auto;">
+        <strong>Overview of <span class="texttt">ReDi</span> </strong>. Our generative image modeling framework bridges the gap between generative
+modeling and representation learning by leveraging a diffusion model that jointly captures low-level
+image details (via VAE latents) and high-level semantic features (via DINOv2). Trained to generate
+coherent image–feature pairs from pure noise, this unified latent-semantic dual-space diffusion
+approach significantly boosts both generative quality and training convergence speed.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <!-- Use Bulma's is-max-fullhd for a wider container -->
+  <div class="container is-max-fullhd">
+    <div class="columns is-centered has-text-centered">
+      <!-- Optional: keep or change is-three-quarters to is-full to make columns even wider -->
+      <div class="column is-three-quarters">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Latent diffusion models (LDMs) dominate high-quality image generation, yet integrating representation learning with generative modeling remains a challenge. We
+introduce a novel generative image modeling framework that seamlessly bridges
+this gap by leveraging a diffusion model to jointly model low-level image latents
+(from a variational autoencoder) and high-level semantic features (from a pretrained
+self-supervised encoder like DINO). Our latent-semantic diffusion approach learns
+to generate coherent image–feature pairs from pure noise, significantly enhancing
+both generative quality and training efficiency, all while requiring only minimal
+modifications to standard Diffusion Transformer architectures. By eliminating
+the need for complex distillation objectives, our unified design simplifies training and unlocks a powerful new inference strategy: Representation Guidance,
+which leverages learned semantics to steer and refine image generation. Evaluated
+in both conditional and unconditional settings, our method delivers substantial
+improvements in image quality and training convergence speed, establishing a
+new direction for representation-aware generative modeling.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+<!-- Use Bulma's is-max-fullhd for a wider container -->
+<div class="container is-max-fullhd">
+  <div class="columns is-centered has-text-centered">
+    <!-- Optional: keep or change is-three-quarters to is-full to make columns even wider -->
+    <div class="column is-three-quarters">
+      <h2 class="title is-3">Method</h2>
+      
+      <div class="content has-text-justified">
+        <p>
+          <span class="has-text-weight-bold is-size-4" 
+          style="display: inline-block; margin-right: 0.5rem;">
+
+          <figure style="text-align: center; margin: 20px 0;">
+            <img src="static/images_new/method.png" alt="Description of the image" style="max-width: 100%; height: auto;">
+            <figcaption>Overview of <span class="texttt">ReDi</span> pipeline. Given an input image, the VAE latent and the principal components of DINOv2 are extracted.
+              Both modalities are noised and fused into a joint token sequence, given as input to DiT or SiT.</figcaption>
+          </figure>
+    
+
+
+
+          <span class="has-text-weight-bold is-size-4" 
+          style="display: inline-block; margin-right: 0.5rem;">
+            Motivation:
+          </span>
+          </span>
+          Recent work by <a href="https://sihyun.me/REPA/">Yu et al. (2025) (REPA)</a> demonstrates that improving
+          the semantic quality of diffusion features through distillation of pretrained self-supervised representations leads to better generation quality and faster convergence. Their results establish a clear
+          connection between representation learning and generative performance.
+          Motivated by these insights, we investigate whether a more effective approach to leveraging representation learning can further enhance image generation performance. 
+          Rather than aligning diffusion features with external representations via distillation, we
+          propose to jointly model:
+          
+        </p>
+
+
+        <head></head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          ul {
+            padding-left: 50px; /* Adjust the left padding to push the list to the right */
+          }
+      
+          li {
+            margin-left: 50px; /* Additional space between list items if needed */
+          }
+      
+          .teal {
+            color: teal;
+          }
+      
+          .purple {
+            color: purple;
+          }
+        </style>
+        <title>ReDi</title>
+      </head>
+      <body>
+        <ul>
+          <li><span class="teal">Precise low-level features via the VAE latents</span></li>
+          <li><span class="purple">Semantic high-level features from DINOv2</span></li>
+        </ul>
+      </body>
+      
+      <hr style="border: 1px solid black; width: 100%; margin: 20px auto;">
+
+
+
+        <!-- Paragraph 2 -->
+        <p>
+          <span class="has-text-weight-bold is-size-4" 
+          style="display: inline-block; margin-right: 0.5rem;">
+            Joint Image-Representation Generation:
+          </span>
+          During training, given an image $\mathbf{x}_0$ and its DINOv2 features $\mathbf{z}_0$, we define a joint forward diffusion process: 
+        </p>
+    
+        <!-- Equation (centered by default in MathJax) -->
+        \[
+        \begin{aligned}
+        \textcolor{teal}{\mathbf{x}_t} = \sqrt{\bar{\alpha}_t}\textcolor{teal}{\mathbf{x}_0} + \sqrt{1-\bar{\alpha}_t} \textcolor{teal}{\boldsymbol{\epsilon}_x}, \quad  
+        \textcolor{purple}{\mathbf{z}_t} = \sqrt{\bar{\alpha}_t}\textcolor{purple}{\mathbf{z}_0} + \sqrt{1-\bar{\alpha}_t} \textcolor{purple}{\boldsymbol{\epsilon}_z}, 
+        \end{aligned}
+        \]
+        The diffusion model $\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, \mathbf{z}_t, t)$ takes as input $\mathbf{x}_t$ and $\mathbf{z}_t$, along with timestep $t$, and jointly predicts the noise for both inputs. Specifically, it produces two separate predictions: $\textcolor{black}{\boldsymbol{\epsilon}^x_\theta}(\mathbf{x}_t, \mathbf{z}_t, t)$ for the image latent noise $\boldsymbol{\epsilon}_x$,  and $\textcolor{black}{\boldsymbol{\epsilon}^z_\theta}(\mathbf{x}_t, \mathbf{z}_t, t)$ for the visual representation noise $\boldsymbol{\epsilon}_z$. The training objective combines both predictions:
+        \[
+        \mathcal{L}_{joint} = \underset{\textcolor{teal}{\mathbf{x}_0}, \textcolor{purple}{\mathbf{z}_0}, t} { \mathbb{E}} \Big [  
+        \Vert \textcolor{black}{\boldsymbol{\epsilon}^x_\theta}(\textcolor{teal}{\mathbf{x}_t}, \textcolor{purple}{\mathbf{z}_t}, t) - \textcolor{teal}{\boldsymbol{\epsilon}_x} \Vert_2^2  
+        + \lambda_z \Vert \textcolor{black}{\boldsymbol{\epsilon}^z_\theta}(\textcolor{teal}{\mathbf{x}_t},\textcolor{purple}{\mathbf{z}_t}, t) - \textcolor{purple}{\boldsymbol{\epsilon}_z} \Vert_2^2 \Big],  
+        \]
+
+      </p>
+
+
+      <hr style="border: 1px solid black; width: 100%; margin: 20px auto;">
+
+
+      <p>
+        <img src="static/images_new/fusion.png" alt="An example image" class="right-float">
+        <br>
+        <style>
+          ul {
+            padding-left: 20px; /* Adjust the left padding to push the list to the right */
+          }
+      
+          li {
+            margin-left: 20px; /* Additional space between list items if needed */
+          }
+
+
+
+        </style>
+        
+        
+        <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                  .large-text {
+                      font-size: 1.2em; /* Adjust the size as needed */
+                  }
+              </style>
+          
+        
+        </head>
+
+          <body>
+              <strong class="large-text">Fusion of Image and Representation Tokens</strong>
+          </body>
+          </html>
+        <br>
+        We explore two approaches:
+        <br>
+        <strong>Merged Tokens</strong>: The tokens are summed channel-wise:
+        <ul>
+          <li>$\mathbf{h}_t = \mathbf{x}_t \mathbf{W}_{\text{emb}}^x + \mathbf{z}_t \mathbf{W}_{\text{emb}}^z \in \mathbb{R}^{L \times C_d}$</li>
+
+        </ul>
+        
+        <br>  
+          
+        <strong>Separate Tokens</strong>: Tokens are concatenated along the sequence dimension:
+        <ul>
+          <li>$\mathbf{h}_t = [\mathbf{x}_t \mathbf{W}_{\text{emb}}^x \,, \, \mathbf{z}_t \mathbf{W}_{\text{emb}}^z] \in \mathbb{R}^{2L \times C_d},$
+          </li>
+
+        </ul>
+        
+        <br>  
+
+
+        
+      </p>
+      <hr style="border: 1px solid black; width: 100%; margin: 20px auto;">
+
+      <p>
+        <img src="static/images_new/pca.png" alt="An example image" class="left-float">
+
+        <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <style>
+                  .large-text {
+                      font-size: 1.2em; /* Adjust the size as needed */
+                  }
+              </style>
+          </head>
+          <body>
+              <strong class="large-text">Dimensionality-Reduced DINOv2</strong>
+          </body>
+          </html>
+          <br>
+          In practice, the channel dimension of visual representations ($C_z$) significantly exceeds that of image latents ($C_x$), i.e., $C_z \gg C_x$. We empirically observe that this imbalance degrades performance, as the model disproportionately allocates capacity to visual representations at the expense of image latents.  
+
+To address this, we apply Principal Component Analysis (PCA) to reduce the dimensionality of $\mathbf{z}_0$ from $C_z$ to $C^{\text{pca}}_z$.  
+        
+      </p>
+      
+
+      <hr style="border: 1px solid black; width: 100%; margin: 20px auto;">
+
+
+      <p>
+        <span class="has-text-weight-bold is-size-4" 
+        style="display: inline-block; margin-right: 0.5rem;">
+          Representation Guidance:
+        </span>
+        Joint modeling allows us to treat the generated noisy representation as a condition. 
+        During inference we modify the posterior distribution to: $\hat{p}_\theta(\mathbf{x}_t, \mathbf{z}_t) \propto p_\theta(\mathbf{x}_t) p( \mathbf{z}_t \vert \mathbf{x}_t)^{w_r}$
+        \begin{align}
+            \nabla_{\!\mathbf{x}_t} \text{log} \; \hat{p}_\theta(\mathbf{x}_t, \mathbf{z}_t)=&
+                \nabla_{\!\mathbf{x}_t} \text{log} \;p_\theta(\mathbf{x}_t)+
+                w_r\big(
+            \nabla_{\!\mathbf{x}_t} \text{log} \;p_\theta(\mathbf{z}_t \vert \mathbf{x}_t)
+                \big) \\
+                =& \nabla_{\!\mathbf{x}_t} \text{log} \;p_\theta(\mathbf{x}_t)+
+                w_r\big(
+            \nabla_{\!\mathbf{x}_t} \text{log} \;p_\theta(\mathbf{x}_t, \mathbf{z}_t)-
+            \nabla_{\!\mathbf{x}_t} \text{log} \;p_\theta(\mathbf{x}_t)
+                \big).
+        \end{align}
+        
+        By recalling the equivalence of denoisers and scores \citep{vincent2011}, we implement this representation-guided prediction $\boldsymbol{\hat{e}_\theta}(\mathbf{x}_t, \mathbf{z}_t, t)$ at each denoising step as follows:
+        \begin{equation}
+        \boldsymbol{\hat{\epsilon}}_\theta(\mathbf{x}_t, \mathbf{z}_t, t) = \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t) + w_r\left(\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, \mathbf{z}_t, t) - \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)\right).
+        \end{equation}
+        Both the image-feature model the image-only model are trained together.  With probability $p_{drop}$, we zero out $\mathbf{z}_t$ (setting $\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t) = \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, \mathbf{0}, t)$) and disable the visual representation denoising loss  </div>
+  </div>
+</div>
+</section>
+
+
+
+
+<section class="section hero"></section>
+  <!-- Use Bulma's is-max-fullhd for a wider container -->
+  <div class="container is-max-fullhd">
+    <div class="columns is-centered has-text-centered">
+      <!-- Optional: keep or change is-three-quarters to is-full to make columns even wider -->
+      <div class="column is-three-quarters">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <p>
+             We compare the FID values between vanilla DiT or SiT models and those trained with ReDi. Without CFG, ReDi achieves FID=7.5 at 400K iterations, outperforming the vanilla model's performance at 7M iterations. Importantly ReDi shows a greater performance boost than REPA, reaching an FID of 5.7 at 700K whereas REPA reaches an FID of 5.9 at 4M iterations.
+             Moreover, using classifier-free guidance, SiT-XL/2 with ReDi outperforms recent diffusion models with fewer epochs as well as REPA with SiT-XL/2.
+            </p>
+           <div class="container" style="max-width: 1800px; margin: 0 auto;">
+            <div class="hero-body" style="text-align: center;">
+              <!-- Increase the width or remove object-fit if you don't want the image cropped -->
+              <img 
+                src="static/images_new/main_bench.png" 
+                alt="Intro Image" 
+                id="tree"
+                style="width: 100%; height: auto; object-fit: cover;"
+              >
+              <h2 class="subtitle has-text-left" style="font-size: 1rem; margin: auto;">
+
+
+                <!-- Your subtitle or description here -->
+              </h2>
+            </div>
+         </div>
+
+
+         <hr style="border: 1px solid black; width: 100%; margin: 20px auto;">
+
+
+         <figure style="text-align: center; margin: 20px 0;">
+          <img src="static/images_new/vis.png" alt="Description of the image" style="max-width: 100%; height: auto;">
+          <figcaption> <strong> Selected samples </strong> from our  <span class="texttt">SiT-XL/2 w/ ReDi </span> model trained on ImageNet 256 × 256.
+            Images and visual representations are jointly generated by our model.</figcaption>
+        </figure>
+  
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<section class="section hero"></section>
+  <!-- Use Bulma's is-max-fullhd for a wider container -->
+  <div class="container is-max-fullhd">
+    <div class="columns is-centered has-text-centered">
+      <!-- Optional: keep or change is-three-quarters to is-full to make columns even wider -->
+      <div class="column is-three-quarters">
+        <h2 class="title is-3">Analysis</h2>
+        <div class="content has-text-justified">
+          
+
+          <p>
+            <img src="static/images_new/ab_pca.png" alt="An example image" class="right-float">
+            <br>
+            <strong>Dimensionality reduction ablation. </strong> We observe that Increasing the component count improves performance, up to $r=8$, beyond which further components begin to degrade the quality of generation. This suggests an optimal intermediate subspace where compressed visual features retain sufficient expressivity to guide generation without dominating model capacity.
+
+          </p>
+          
+
+          <br>
+          <br>
+          <p>
+            <img src="static/images_new/ab_fusion.png" alt="An example image" class="left-float">
+
+            <strong>Merged Tokens vs. Separate Tokens. </strong> While both approaches achieve comparable performance gains, SP demonstrates slightly better results. This advantage comes at a significant computational cost: SP doubles the transformer's input sequence length by introducing $256$ additional DINOv2 tokens, resulting in approximately $2\times$ greater compute demands during both training and inference. The MR strategy, by contrast, maintains the original sequence length while delivering similar performance improvements, thereby preserving computational efficiency as measured by throughput.
+            
+          </p>
+          
+
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <center><h2 class="title is-2">Additional Visualizations</h2></center>
+      <br>
+      <center><h4 class="title is-4">Latent representations w/ and wo/ EQ-VAE</h4></center>
+      For a better demontration of the effect of our regularization we illustrate the latent representations of consecutive video frames.
+
+      <div id="results-carousel" class="carousel results-carousel">
+
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/0.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/1.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/2.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/3.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/4.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/5.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/6.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSD-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdvae/7.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+
+
+      </div>
+
+
+
+      <div id="results-carousel" class="carousel results-carousel">
+
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/0.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/1.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/2.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/3.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/4.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/5.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/6.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+        <div class="item item-video1">
+          <center><h5 class="title is-5"><span style="margin-right: 170px;">   
+            &nbsp;&nbsp;&nbspImage</span>
+            <span style="margin-right: 10px;">
+              &nbsp;&nbsp;&nbspSDXL-VAE</span>
+            <span>+EQ-VAE</span>
+          </h5></center>
+          <center><img src="static/gifs/sdxl/7.gif" alt="Dynamic Latent Projection" id="gif1" style="height: 80%; width: 80%; object-fit: cover;"></center>
+        </div>
+
+
+      </div>
+ 
+
+
+
+    </div>
+  </div>
+</section>
+
+ -->
+
+
+
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <center><h2 class="title">Cite Us</h2></center>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ReDi</title>
+        <style>
+            .code-container {
+                position: relative;
+                background-color: #f5f5f5;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+    
+            .copy-btn {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+    
+            .copy-btn:hover {
+                background-color: #0056b3;
+            }
+    
+            pre {
+                margin: 0;
+                padding-right: 170px; /* To avoid overlapping with the button */
+                overflow-x: auto;
+            }
+        </style>
+    </head>
+    <body>
+    
+    <div class="code-container">
+        <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+        <pre><code id="code-snippet">
+article{kouzelis2025boosting,
+  title={Boosting Generative Image Modeling via Joint Image-Feature Synthesis},
+  author={Kouzelis, Theodoros and Karypidis, Efstathios and Kakogeorgiou, Ioannis and Gidaris, Spyros and Komodakis, Nikos},
+  journal={arXiv preprint arXiv:2504.16064},
+  year={2025}
+}
+        </code></pre>
+    </div>
+    
+    <script>
+        function copyToClipboard() {
+            var code = document.getElementById("code-snippet").innerText;
+            navigator.clipboard.writeText(code).then(function() {
+                alert('Code copied to clipboard!');
+            }, function(err) {
+                alert('Failed to copy text: ', err);
+            });
+        }
+    </script>
+    
+    </div>
+</section> -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer> --> -->
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
